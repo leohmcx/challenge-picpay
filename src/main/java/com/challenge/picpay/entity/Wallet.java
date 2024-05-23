@@ -42,6 +42,7 @@ public class Wallet {
     private String password;
 
     @Column(name = "balance")
+    @Builder.Default
     private BigDecimal balance = ZERO;
 
     @JoinColumn(name = "wallet_type_id")

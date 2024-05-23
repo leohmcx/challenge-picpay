@@ -34,5 +34,9 @@ public class WalletType {
 
         private final Long id;
         private final String description;
+
+        public WalletType get() {
+            return WalletType.builder().id(id).description(description).build();
+        }
     }
 }

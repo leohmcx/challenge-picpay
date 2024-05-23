@@ -20,13 +20,8 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) {
         stream(WalletType.Enum.values())
                 .forEach(w -> {
-                    final var walletType = WalletType.builder()
-                            .id(w.getId())
-                            .description(w.getDescription())
-                            .build();
-
+                    final var walletType = w.get();
                     log.info("Setting up walletType: {}", walletType);
-
                     walletTypeRepository.save(walletType);
                 });
     }
