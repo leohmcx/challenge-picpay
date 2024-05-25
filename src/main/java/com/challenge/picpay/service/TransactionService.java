@@ -12,11 +12,9 @@ import com.challenge.picpay.repository.TransactionRepository;
 import com.challenge.picpay.repository.WalletRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
-import static java.util.Optional.of;
-import static java.util.Optional.ofNullable;
+import static com.challenge.picpay.entity.WalletType.Enum.MERCHANT;
 import static java.util.concurrent.CompletableFuture.runAsync;
 import static org.apache.commons.lang3.BooleanUtils.isFalse;
 
@@ -30,7 +28,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
 
     @Transactional
-    public Transaction makeTransfer(final TransactionDto request) {
+    public Transaction transfer(final TransactionDto request) {
         final var sender = walletRepository.findById(request.payer())
                 .orElseThrow(() -> new WalletNotFoundException(request.payer()));
         final var receiver = walletRepository.findById(request.payee())
@@ -50,22 +48,22 @@ public class TransactionService {
                 .value(request.value())
                 .build());
 
-        runAsync(() -> notificationService.sendNotification(transaction));
+        runAsync(() -> notificationService.send(transaction));
 
         return transaction;
     }
 
     private void isTransactionValid(final TransactionDto request, final Wallet sender) {
-        of(WalletType.Enum.isMerchant(sender.getWalletType().getDescription()))
-                .filter(BooleanUtils::isTrue)
-                .orElseThrow(TransferNotAllowedForWalletTypeMerchant::new);
+        if (MERCHANT.getDescription().equalsIgnoreCase(sender.getWalletType().getDescription())) {
+            throw new TransferNotAllowedForWalletTypeMerchant();
+        }
 
-        ofNullable(sender.getBalance())
-                .filter(balance -> isFalse(balance.subtract(request.value()).doubleValue() > 0))
-                .orElseThrow(InsufficientBalanceException::new);
+        if (sender.getBalance().subtract(request.value()).doubleValue() < 0) {
+            throw new InsufficientBalanceException();
+        }
 
-        of(authorizationService.isAuthorized(request))
-                .filter(BooleanUtils::isFalse)
-                .orElseThrow(TransferNotAuthorizedException::new);
+        if (isFalse(authorizationService.isAuthorized(request))) {
+            throw new TransferNotAuthorizedException();
+        }
     }
 }

@@ -5,7 +5,6 @@ import com.challenge.picpay.entity.Transaction;
 import com.challenge.picpay.service.TransactionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +15,8 @@ public class TransactionController {
 
     private final TransactionService service;
 
-    @PostMapping
-    private ResponseEntity<Transaction> makeTransfer(@RequestBody @Valid TransactionDto request) {
-        return ResponseEntity.ok(service.makeTransfer(request));
+    @PostMapping("/transfer")
+    public Transaction transfer(@RequestBody @Valid TransactionDto request) {
+        return service.transfer(request);
     }
 }

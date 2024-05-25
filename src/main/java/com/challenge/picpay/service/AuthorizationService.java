@@ -17,7 +17,7 @@ public class AuthorizationService {
 
     private final AuthorizationClient client;
 
-    public boolean isAuthorized(TransactionDto transaction) {
+    public boolean isAuthorized(final TransactionDto transaction) {
         return ofNullable(client.isAuthorized())
                 .filter(a -> isFalse(a.getStatusCode().isError()))
                 .map(ResponseEntity::getBody)

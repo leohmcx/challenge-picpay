@@ -17,7 +17,7 @@ public class NotificationService {
 
     private final NotificationClient client;
 
-    public void sendNotification(final Transaction transaction) {
+    public void send(final Transaction transaction) {
         try {
             log.info("Sending notification for transaction: {}", transaction);
 
