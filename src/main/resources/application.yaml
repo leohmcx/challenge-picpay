@@ -10,3 +10,13 @@ spring:
     username: ${MYSQL_USER:admin}
     password: ${MYSQL_PASSWORD:123}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    openfeign:
+      client:
+        config:
+          authorization-client:
+            url: https://run.mocky.io/v3/eb7d80cc-e966-434f-bf44-08ea515fc4e7
+            connect-timeout: 5000
+            read-timeout: 5000
+            logger-level: full
+
