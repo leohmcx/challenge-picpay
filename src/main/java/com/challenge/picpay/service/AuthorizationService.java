@@ -2,7 +2,7 @@ package com.challenge.picpay.service;
 
 import com.challenge.picpay.client.AuthorizationClient;
 import com.challenge.picpay.client.dto.AuthorizationResponse;
-import com.challenge.picpay.entity.Transaction;
+import com.challenge.picpay.controller.dto.TransactionDto;
 import com.challenge.picpay.exception.PicPayException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class AuthorizationService {
 
     private final AuthorizationClient client;
 
-    public boolean isAuthorized(Transaction transaction) {
+    public boolean isAuthorized(TransactionDto transaction) {
         return ofNullable(client.isAuthorized())
                 .filter(a -> isFalse(a.getStatusCode().isError()))
                 .map(ResponseEntity::getBody)

@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @AllArgsConstructor
@@ -37,6 +39,11 @@ public class WalletType {
 
         public WalletType get() {
             return WalletType.builder().id(id).description(description).build();
+        }
+
+        public static boolean isMerchant(String description) {
+            return Arrays.stream(Enum.values())
+                    .anyMatch(e -> e.getDescription().equalsIgnoreCase(description));
         }
     }
 }
