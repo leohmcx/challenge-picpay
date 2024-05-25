@@ -3,7 +3,6 @@ package com.challenge.picpay.service;
 import com.challenge.picpay.controller.dto.TransactionDto;
 import com.challenge.picpay.entity.Transaction;
 import com.challenge.picpay.entity.Wallet;
-import com.challenge.picpay.entity.WalletType;
 import com.challenge.picpay.exception.InsufficientBalanceException;
 import com.challenge.picpay.exception.TransferNotAllowedForWalletTypeMerchant;
 import com.challenge.picpay.exception.TransferNotAuthorizedException;
