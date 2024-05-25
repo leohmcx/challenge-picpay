@@ -19,4 +19,9 @@ spring:
             connect-timeout: 5000
             read-timeout: 5000
             logger-level: full
+          notification-client:
+            url: https://run.mocky.io/v3/0f3987f5-06b1-4670-ae10-0f88a0d6caf7
+            connect-timeout: 5000
+            read-timeout: 5000
+            logger-level: full
 
