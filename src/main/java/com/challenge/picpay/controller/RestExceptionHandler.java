@@ -3,12 +3,9 @@ package com.challenge.picpay.controller;
 import com.challenge.picpay.exception.PicPayException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import static java.util.stream.Collectors.toList;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
